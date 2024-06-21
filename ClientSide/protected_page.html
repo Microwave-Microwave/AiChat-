@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Protected Page</title>
+    </head>
+    <body>
+        <h2>Protected Page</h2>
+        <p>This page is only accessible to logged-in users.</p>
+        <p id="welcomeMessage"></p>
+        <a href="logout.html">Logout</a>
+        <br>
+        <a href="index.php">Back to Home</a>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function()
+            {
+                //igazából most csak egy welcome messaget fetchel ha van hozzáférés de később ezek az üzenetek lesznek
+                fetch('../ServerSide/protected_page.php')
+                    .then(response => response.text())
+                    .then(data =>
+                    {
+                        const welcomeMessage = data.match(/Welcome, (.*?)!/);
+                        if (welcomeMessage)
+                        {
+                            document.getElementById('welcomeMessage').innerText = welcomeMessage[0];
+                        }
+                    });
+            });
+        </script>
+    </body>
+</html>

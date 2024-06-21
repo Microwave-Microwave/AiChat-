@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h2>Login</h2>
+        <form id="loginForm">
+            Username: <input type="text" name="username" required><br>
+            Password: <input type="password" name="password" required><br>
+            <input type="submit" value="Login">
+        </form>
+        <div id="message"></div>
+
+        <script>
+            //ajax jscript ahhoz hogy postoljon infót safely
+            $(document).ready(function()
+            {
+                $("#loginForm").submit(function(e)
+                {
+                    e.preventDefault();
+                    $.ajax(
+                    {
+                        url: '../ServerSide/login.php',
+                        type: 'post',
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        success: function(response)
+                        {
+                            if(response.success)
+                            {
+                                window.location.href = '../ServerSide/protected_page.php';
+                            }
+                            else
+                            {
+                                $("#message").text(response.message);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h2>Register</h2>
+        <form id="registerForm">
+            Username: <input type="text" name="username" required><br>
+            Password: <input type="password" name="password" required><br>
+            Confirm Password: <input type="password" name="confirm_password" required><br>
+            <input type="submit" value="Register">
+        </form>
+        <div id="message"></div>
+
+        <script>
+        //ismét ajax jscript ahhoz hogy postoljon infót safely
+            $(document).ready(function() {
+                $("#registerForm").submit(function(e)
+                {
+                    e.preventDefault();
+                    $.ajax(
+                    {
+                        url: '../ServerSide/register.php',
+                        type: 'post',
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        success: function(response)
+                        {
+                            if (response.success)
+                            {
+                                //TODO NINCS MÉG WELCOME PAGE XDD 
+                                window.location.href = 'welcome_page.html';
+                            }
+                            else
+                            {
+                                $("#message").text(response.message);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
